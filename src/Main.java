@@ -36,14 +36,7 @@ public class Main {
         System.out.println("\nLuxes sorted by floor:");//3
         luxes.stream().sorted(new LuxFloorComparator()).forEach(System.out::println);
 
-        int priceSum = 0;//4
-        int counter = 0;
-        int averagePrice = 0;
-        for(Lux lux : luxes){
-            priceSum += lux.getPriceForNight();
-            counter++;
-        }
-        System.out.println("\nAverage lux price = " + (averagePrice = priceSum / counter));
+        System.out.println("\nAverage lux price = " + luxes.stream().mapToInt(Lux::getPriceForNight).average());//4
 
         System.out.println("\nPrices for the rooms with acceptable living conditions:");//5
         rooms.stream().filter(room -> room.getNumberOfCockroaches() < 10 && room.isWithWindows() && room.isWithShower()
@@ -53,3 +46,30 @@ public class Main {
         rooms.stream().filter(room -> room.getNumberOfCockroaches() == 0).forEach(System.out::println);
     }
 }
+
+/*      All luxes with price lower than 20 000:
+        Lux{numberOfBeds=2, isEquippedWithPool=false, floor=13, numberOfBathrooms=2, isEquippedWithPersonalMaid=true}
+        Lux{numberOfBeds=2, isEquippedWithPool=true, floor=14, numberOfBathrooms=1, isEquippedWithPersonalMaid=false}
+        Lux{numberOfBeds=1, isEquippedWithPool=false, floor=10, numberOfBathrooms=1, isEquippedWithPersonalMaid=false}
+        Lux{numberOfBeds=4, isEquippedWithPool=true, floor=12, numberOfBathrooms=2, isEquippedWithPersonalMaid=true}
+
+        Highest lux price is for room: Optional[Lux{numberOfBeds=5, isEquippedWithPool=true, floor=15, numberOfBathrooms=3, isEquippedWithPersonalMaid=true}]
+
+        Luxes sorted by floor:
+        Lux{numberOfBeds=1, isEquippedWithPool=false, floor=10, numberOfBathrooms=1, isEquippedWithPersonalMaid=false}
+        Lux{numberOfBeds=4, isEquippedWithPool=true, floor=12, numberOfBathrooms=2, isEquippedWithPersonalMaid=true}
+        Lux{numberOfBeds=2, isEquippedWithPool=false, floor=13, numberOfBathrooms=2, isEquippedWithPersonalMaid=true}
+        Lux{numberOfBeds=2, isEquippedWithPool=true, floor=14, numberOfBathrooms=1, isEquippedWithPersonalMaid=false}
+        Lux{numberOfBeds=5, isEquippedWithPool=true, floor=15, numberOfBathrooms=3, isEquippedWithPersonalMaid=true}
+
+        Average lux price = OptionalDouble[11260.0]
+
+        Prices for the rooms with acceptable living conditions:
+        90
+        85
+
+        Rooms with no insects:
+        OnlyBed{isAirConditioned=true, isWithWindows=true, isWithShower=true, numberOfCockroaches=0}
+*/
+
+
